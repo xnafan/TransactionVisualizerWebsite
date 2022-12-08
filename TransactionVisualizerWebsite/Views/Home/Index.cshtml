@@ -1,39 +1,35 @@
 ﻿@model TransactionVisualizerWebsite.Models.StockUpdateParameters
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Transaction visualizer";
 }
 
-<h1>Index</h1>
+<h1>Transaction visualizer</h1>
 
-<h4>StockUpdateParameters</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<h4>Choose the parameters for the transaction</h4>
         <form asp-action="UpdateStock">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="StockChangeAmount" class="control-label"></label>
                 <input asp-for="StockChangeAmount" class="form-control" />
                 <span asp-validation-for="StockChangeAmount" class="text-danger"></span>
             </div>
-            <div class="form-group">
+    <div class="form-group form-inline">
                 <label asp-for="PauseBeforeUpdateInSeconds" class="control-label"></label>
                 <input asp-for="PauseBeforeUpdateInSeconds" class="form-control" />
                 <span asp-validation-for="PauseBeforeUpdateInSeconds" class="text-danger"></span>
             </div>
-            <div class="form-group">
-
-                <label asp-for="IsolationLevel" class="control-label"></label>
+    <div class="form-group form-inline" style="padding-top:25px;">
+                    <label asp-for="IsolationLevel" class="control-label"></label>
+                <p>
                 <select asp-for="IsolationLevel" asp-items="Html.GetEnumSelectList<StockUpdateParameters.ValidIsolationLevels>()"></select>
                 <span asp-validation-for="IsolationLevel" class="text-danger"></span>
+                </p>
             </div>
-            <div class="form-group">
+    <div class="form-group form-inline">
                 <input type="submit" value="Update stock" class="btn btn-primary" />
             </div>
         </form>
-    </div>
-</div>
 <div><a href="/home/RefreshStock?newStockAmount=5">Set stock to 5</a></div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

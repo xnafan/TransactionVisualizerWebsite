@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransactionVisualizerWebsite.styles.css" asp-append-version="true" />
+    <style>
+        /** {border: 1px solid red !important;}*/
+        input {width:150px !important;}
+
+        label {
+            display: inline-block;
+            width: 250px;
+            float:left;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -22,25 +32,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+            <div style="width:60%;max-width:600px;background-color:white;opacity:90%;margin:0px auto; padding:20px;margin-top:40px;border-radius: 25px;border:2px solid cornflowerblue; box-shadow: 5px 10px rgba(0,0,0,0.2);position: relative;
+z-index: 10;">
+
+        <main role="main" class="pb-3 text-center">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - TransactionVisualizerWebsite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+       <footer class="footer bg-light">
+            <div class="container text-center">
+            <a href="https://github.com/xnafan/TransactionVisualizerWebsite"> Transaction visualizer website code on GitHub <img src="/gfx/GitHub-Mark-20px.png" /> </a>
+            </div>
+        </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
