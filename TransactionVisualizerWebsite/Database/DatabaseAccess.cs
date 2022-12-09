@@ -6,23 +6,30 @@ using TransactionVisualizerWebsite.Models;
 namespace TransactionVisualizerWebsite.Database;
 public class DatabaseAccess
 {
-    public bool RemoveProductIfInStock(StockUpdateParameters parameters)
+    public bool RemoveProductIfEnoughInStock(StockUpdateParameters parameters)
     {
-        using SqlConnection? connection = CreateConnection();
-        connection.Open();
-        using SqlTransaction? transaction = connection.BeginTransaction(parameters.IsolationLevel);
-        int productStock = GetProductStock(parameters.ProductId, connection, transaction);
-        Thread.Sleep(parameters.PauseBeforeUpdateInSeconds * 1000);
-        if (productStock < parameters.StockChangeAmount) { return false; }
-        var stockAltered = AlterStock(parameters.ProductId, -parameters.StockChangeAmount, connection, transaction);
-        transaction.Commit();
-        return stockAltered;
+        try
+        {
+            using SqlConnection? connection = CreateConnection();
+            connection.Open();
+            using SqlTransaction? transaction = connection.BeginTransaction(parameters.IsolationLevel);
+            int productStock = GetProductStock(parameters.ProductId, transaction);
+            Thread.Sleep(parameters.PauseBeforeUpdateInSeconds * 1000);
+            if (productStock < parameters.Quantity) { return false; }
+            var stockAltered = AlterStock(parameters.ProductId, -parameters.Quantity, transaction);
+            transaction.Commit();
+            return stockAltered;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
-    public int GetProductStock(int productId, SqlConnection? connection = null, SqlTransaction? transaction = null)
+    public int GetProductStock(int productId, SqlTransaction? transaction = null)
     {
         //if we didn't receive a connection create a new one
-        connection = connection ?? CreateConnection();
+        var connection = transaction?.Connection ?? CreateConnection();
         //create a command
         SqlCommand command = connection.CreateCommand();
         command.CommandText = "SELECT stock FROM Product WHERE Id=@productId";
@@ -40,12 +47,12 @@ public class DatabaseAccess
         if (initialConnectionState == ConnectionState.Closed) { connection.Close(); }
         return stock;
     }
-    private bool AlterStock(int productId, int change, SqlConnection? connection = null, SqlTransaction? transaction = null)
+    public bool AlterStock(int productId, int change, SqlTransaction? transaction = null)
     {
         try
         {
             //if we didn't receive a connection create a new one
-            connection = connection ?? CreateConnection();
+            var connection = transaction?.Connection ?? CreateConnection();
             //create a command
             SqlCommand command = connection.CreateCommand();
             command.CommandText = "UPDATE Product SET Stock = Stock + @change WHERE Id=@productId";
@@ -57,6 +64,8 @@ public class DatabaseAccess
             //set the parameters for the SQL
             command.Parameters.AddWithValue("@change", change);
             command.Parameters.AddWithValue("@productId", productId);
+
+
             //store whether we're working on an open or closed connection
             var initialConnectionState = connection.State;
             //open the connection if it was closed initially

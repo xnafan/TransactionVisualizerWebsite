@@ -5,26 +5,36 @@ using TransactionVisualizerWebsite.Models;
 namespace TransactionVisualizerWebsite.Controllers;
 public class HomeController : Controller
 {
-    private static readonly int productId = 1;
+    private DatabaseAccess databaseAccess;
+
+    public HomeController(DatabaseAccess dbAccess) => databaseAccess = dbAccess;
+
+    private static readonly int PRODUCT_ID = 1;
     public IActionResult Index()
     {
-        //var x = new DatabaseAccess().RemoveProductIfInStock(1, 5);
+        ViewData["currentStock"] = databaseAccess.GetProductStock(PRODUCT_ID);
         return View(new StockUpdateParameters());
     }   
 
     [HttpPost]
     public IActionResult UpdateStock(StockUpdateParameters parameters)
     {
-        var db = new DatabaseAccess();
-        var updatedSuccessfully = db.RemoveProductIfInStock(parameters);
-        var newStock = db.GetProductStock(parameters.ProductId);
-        return View(new {updated=updatedSuccessfully, stock=newStock });
+        var stockBefore = databaseAccess.GetProductStock(parameters.ProductId);
+        var desiredQuantityInOrder = parameters.Quantity;
+        var updatedSuccessfully = databaseAccess.RemoveProductIfEnoughInStock(parameters);
+        var stockAfter = databaseAccess.GetProductStock(parameters.ProductId);
+        return View(new {updated=updatedSuccessfully, stockBefore = stockBefore, stockAfter = stockAfter, desiredQuantityInOrder= desiredQuantityInOrder });
     }
 
-    public IActionResult RefreshStock([FromQuery] int newStockAmount)
+    public IActionResult SetStock([FromQuery] int newStockAmount)
     {
-        var db = new DatabaseAccess();
-        db.SetStock(productId, newStockAmount);
+        databaseAccess.SetStock(PRODUCT_ID, newStockAmount);
+        return Redirect(nameof(Index));
+    }
+
+    public IActionResult ChangeStock([FromQuery] int changeInStock)
+    {
+        databaseAccess.AlterStock(PRODUCT_ID, changeInStock);
         return Redirect(nameof(Index));
     }
 }

@@ -17,8 +17,6 @@ namespace TransactionVisualizerWebsite.Models
             [Display(Name = "Repeatable read")]
             RepeatableRead = IsolationLevel.RepeatableRead, 
 
-            Snapshot = IsolationLevel.Snapshot, 
-
             Serializable = IsolationLevel.Serializable
         }
         [Required]
@@ -26,8 +24,9 @@ namespace TransactionVisualizerWebsite.Models
         public int ProductId { get; set; } = 1;
 
         [Required]
-        [Display(Name = "Change in inventory")]
-        public int StockChangeAmount { get; set; } = 5;
+        [Display(Name = "Quantity to order")]
+        [Range(1, int.MaxValue, ErrorMessage = "Must be larger than zero")]
+        public int Quantity { get; set; } = 5;
 
         [Required]
         [Display(Name = "Pause between read and update (in seconds)")]

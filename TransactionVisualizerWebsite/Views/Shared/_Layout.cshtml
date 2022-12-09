@@ -9,12 +9,16 @@
     <link rel="stylesheet" href="~/TransactionVisualizerWebsite.styles.css" asp-append-version="true" />
     <style>
         /** {border: 1px solid red !important;}*/
-        input {width:150px !important;}
-
+        input {
+            width: 150px !important;
+        }
         label {
             display: inline-block;
             width: 250px;
-            float:left;
+            float: left;
+        }
+        .center-rounded-corners {
+            width:60%;max-width:600px;background-color:white;opacity:90%;margin:0px auto; padding:20px;margin-top:40px;border-radius: 25px;border:2px solid cornflowerblue; box-shadow: 5px 10px rgba(0,0,0,0.2);position: relative;z-index: 10;
         }
     </style>
 </head>
@@ -37,19 +41,17 @@
             </div>
         </nav>
     </header>
-            <div style="width:60%;max-width:600px;background-color:white;opacity:90%;margin:0px auto; padding:20px;margin-top:40px;border-radius: 25px;border:2px solid cornflowerblue; box-shadow: 5px 10px rgba(0,0,0,0.2);position: relative;
-z-index: 10;">
-
+    <div class="center-rounded-corners">
         <main role="main" class="pb-3 text-center">
             @RenderBody()
         </main>
     </div>
 
-       <footer class="footer bg-light">
-            <div class="container text-center">
+    <footer class="footer bg-light">
+        <div class="container text-center">
             <a href="https://github.com/xnafan/TransactionVisualizerWebsite"> Transaction visualizer website code on GitHub <img src="/gfx/GitHub-Mark-20px.png" /> </a>
-            </div>
-        </footer>
+        </div>
+    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

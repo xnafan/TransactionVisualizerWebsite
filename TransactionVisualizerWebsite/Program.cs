@@ -1,8 +1,11 @@
+using TransactionVisualizerWebsite.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<DatabaseAccess, DatabaseAccess>();
 var app = builder.Build();
 app.UseHttpLogging();
 // Configure the HTTP request pipeline.

@@ -4,6 +4,10 @@
 *@
 
 
-   Updated? @Model.updated
-   <br />Stock: @Model.stock
+<h3 style="color:@(Model.updated?"green":"red")">@(Model.updated ? "Stock updated" : "Stock not updated")</h3>
+<div style="font-size:15pt;">
+<br />Stock before order: @Model.stockBefore
+<br />Desired quantity in order: @Model.desiredQuantityInOrder
+   <br />Stock after order: @Model.stockAfter
+</div>
 
