@@ -29,6 +29,11 @@ namespace TransactionVisualizerWebsite.Models
         public int Quantity { get; set; } = 5;
 
         [Required]
+        [Display(Name = "Max attempts")]
+        [Range(1, int.MaxValue, ErrorMessage = "Must be greater than zero")]
+        public int MaxAttempts { get; set; } = 3;
+
+        [Required]
         [Display(Name = "Pause before update (sec.)")]
         [Range(0, int.MaxValue, ErrorMessage = "May not be negative")]
         public int PauseBeforeUpdateInSeconds { get; set; } = 5;

@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddLogging();
 builder.Services.AddScoped<DatabaseAccess, DatabaseAccess>();
 var app = builder.Build();
 app.UseHttpLogging();

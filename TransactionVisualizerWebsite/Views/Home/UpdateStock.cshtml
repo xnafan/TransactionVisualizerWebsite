@@ -1,13 +1,14 @@
 ﻿@model dynamic
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 
-
-<h3 style="color:@(Model.updated?"green":"red")">@(Model.updated ? "Stock updated" : "Stock not updated")</h3>
-<div style="font-size:15pt;">
-<br />Stock before order: @Model.stockBefore
-<br />Desired quantity in order: @Model.desiredQuantityInOrder
-   <br />Stock after order: @Model.stockAfter
+<div class="center-rounded-corners">
+    <h3 style="color:@(Model.updated?"green":"red")">@(Model.updated ? "Stock updated" : "Stock not updated")</h3>
+    <div style="font-size:15pt;">
+        <br />Stock before order: @Model.stockBefore
+        <br />Desired quantity in order: @Model.desiredQuantityInOrder
+        <br />Stock after order: @Model.stockAfter
+        <br />Attempts: @Model.attempts
+    </div>
 </div>
-
+<div style="width:300px;margin:0px auto;text-align:center;margin-top:10px;">
+    <a href="/">back</a>
+</div>

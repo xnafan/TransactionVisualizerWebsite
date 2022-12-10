@@ -14,17 +14,29 @@ public class HomeController : Controller
     {
         ViewData["currentStock"] = databaseAccess.GetProductStock(PRODUCT_ID);
         return View(new StockUpdateParameters());
-    }   
+    }
 
     [HttpPost]
     public IActionResult UpdateStock(StockUpdateParameters parameters)
     {
+        return TryUpdate(parameters);
+    }
+
+    private IActionResult TryUpdate(StockUpdateParameters parameters)
+    {
         var stockBefore = databaseAccess.GetProductStock(parameters.ProductId);
         var desiredQuantityInOrder = parameters.Quantity;
-        var updatedSuccessfully = databaseAccess.RemoveProductIfEnoughInStock(parameters);
+        bool updatedSuccessfully = false;
+        int attempt = 1;
+        while (attempt <= parameters.MaxAttempts && !updatedSuccessfully)
+        {
+            updatedSuccessfully = databaseAccess.RemoveProductIfEnoughInStock(parameters);
+            attempt++;
+        }
         var stockAfter = databaseAccess.GetProductStock(parameters.ProductId);
-        return View(new {updated=updatedSuccessfully, stockBefore = stockBefore, stockAfter = stockAfter, desiredQuantityInOrder= desiredQuantityInOrder });
+        return View(new { updated = updatedSuccessfully, stockBefore = stockBefore, stockAfter = stockAfter, desiredQuantityInOrder = desiredQuantityInOrder, attempts = attempt });
     }
+
 
     public IActionResult SetStock([FromQuery] int newStockAmount)
     {

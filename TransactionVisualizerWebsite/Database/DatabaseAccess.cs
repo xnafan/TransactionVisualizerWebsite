@@ -10,6 +10,7 @@ public class DatabaseAccess
     {
         try
         {
+            Debug.WriteLine($"Thread: {Thread.CurrentThread.ManagedThreadId} begins 'RemoveProductIfEnoughInStock'");
             using SqlConnection? connection = CreateConnection();
             connection.Open();
             using SqlTransaction? transaction = connection.BeginTransaction(parameters.IsolationLevel);
@@ -20,8 +21,9 @@ public class DatabaseAccess
             transaction.Commit();
             return stockAltered;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Debug.WriteLine($"Thread: {Thread.CurrentThread.ManagedThreadId} got an exception: {ex.Message}");
             return false;
         }
     }
@@ -76,7 +78,9 @@ public class DatabaseAccess
             if (initialConnectionState == ConnectionState.Closed) { connection.Close(); }
             return rowsAffected > 0;
         }
-        catch (Exception) { return false; }
+        catch (Exception ex) {
+            Debug.WriteLine($"Thread: {Thread.CurrentThread.ManagedThreadId} got an exception: {ex.Message}");
+            return false; }
     }
 
     public bool SetStock(int productId, int newStockAmount)
