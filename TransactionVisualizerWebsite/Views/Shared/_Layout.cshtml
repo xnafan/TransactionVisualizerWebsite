@@ -8,17 +8,29 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransactionVisualizerWebsite.styles.css" asp-append-version="true" />
     <style>
-        /** {border: 1px solid red !important;}*/
-        input {
-            width: 150px !important;
+
+        * {
+            font-size:large;
+            /*border: 1px solid red !important;*/
         }
+
+        hr{width:400px; margin:auto; margin-top:25px; background-color:blue;height:2px !important; opacity:100%;}
+            input[type=number] {
+                margin: auto;
+                width: 75px !important;
+            }
         label {
             display: inline-block;
             width: 250px;
-            float: left;
         }
         .center-rounded-corners {
-            width:60%;max-width:600px;background-color:white;opacity:90%;margin:0px auto; padding:20px;margin-top:40px;border-radius: 25px;border:2px solid cornflowerblue; box-shadow: 5px 10px rgba(0,0,0,0.2);position: relative;z-index: 10;
+            width:60%;max-width:750px;background-color:white;opacity:90%;margin:0px auto; padding:20px;margin-top:40px;border-radius: 25px;border:2px solid cornflowerblue; box-shadow: 5px 10px rgba(0,0,0,0.2);position: relative;z-index: 10;text-align:center;
+        }
+
+        td {
+            /*text-align:center;*/
+            vertical-align:top;
+            height: 65px;
         }
     </style>
 </head>
@@ -42,17 +54,26 @@
         </nav>
     </header>
     <div class="center-rounded-corners">
-        <main role="main" class="pb-3 text-center">
             @RenderBody()
-        </main>
     </div>
-
+    <div style="width:300px;margin:0px auto;text-align:center;margin-top:10px;">
+        <a href="javascript:window.open(window.location.href, makeId(), '_new');">open new window</a></div>
     <footer class="footer bg-light">
         <div class="container text-center">
             <a href="https://github.com/xnafan/TransactionVisualizerWebsite"> Transaction visualizer website code on GitHub <img src="/gfx/GitHub-Mark-20px.png" /> </a>
         </div>
     </footer>
-
+    <script>
+        function makeId(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+        </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

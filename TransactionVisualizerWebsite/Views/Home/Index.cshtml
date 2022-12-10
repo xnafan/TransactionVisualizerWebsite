@@ -4,46 +4,66 @@
     ViewData["Title"] = "Transaction visualizer";
 }
 
-<h1>Transaction visualizer</h1>
-
-<h4>Choose the parameters for the transaction</h4>
-
+<h1>Transaction Tester</h1>
+<hr />
 <form asp-action="UpdateStock" class="text-center">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group form-inline">
-        <label asp-for="Quantity" class="control-label"></label>
-        <input asp-for="Quantity" class="form-control" />
-        <span asp-validation-for="Quantity" class="text-danger"></span>
-    </div>
-    <div class="form-group form-inline">
-        <label asp-for="PauseBeforeUpdateInSeconds" class="control-label"></label>
-        <input asp-for="PauseBeforeUpdateInSeconds" class="form-control" />
-        <span asp-validation-for="PauseBeforeUpdateInSeconds" class="text-danger"></span>
-    </div>
-    <div class="form-group form-inline" style="padding-top:25px;">
-        <label asp-for="IsolationLevel" class="control-label"></label>
-        <p>
-            <select asp-for="IsolationLevel" asp-items="Html.GetEnumSelectList<StockUpdateParameters.ValidIsolationLevels>()"></select>
-            <span asp-validation-for="IsolationLevel" class="text-danger"></span>
-        </p>
-    </div>
-    <div class="form-group form-inline">
-        <input type="submit" value="Update stock" class="btn btn-primary" />
-    </div>
-
-
-    <div class="btn-toolbar mb-3 mx-auto m-5" style="width:450px;" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group mr-2" role="group" aria-label="First group">
-            <a href="/home/ChangeStock?changeInStock=-1" class="btn btn-outline-dark btn-lg">-1</a>
-            <a href="/home/ChangeStock?changeInStock=-5" class="btn btn-outline-dark btn-lg">-5</a>
-        </div>
-        <h3 style="margin:5px;">current stock: @ViewData["currentStock"]</h3>
-        <div class="btn-group mr-2" role="group" aria-label="Second group">
-            <a href="/home/ChangeStock?changeInStock=5" class="btn btn-outline-dark btn-lg">+5</a>
-            <a href="/home/ChangeStock?changeInStock=1" class="btn btn-outline-dark btn-lg">+1</a>
-        </div>
-    </div>
+    <table class="mx-auto">
+        <tr>
+            <td colspan="2">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </td>
+        </tr>
+        <tr>
+            <td width="50%">
+                <label asp-for="Quantity" class="control-label"></label>
+            </td>
+            <td width="50%">
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="PauseBeforeUpdateInSeconds" class="control-label"></label>
+            </td>
+            <td>
+                <input asp-for="PauseBeforeUpdateInSeconds" class="form-control" style="float-left"/>
+              <span asp-validation-for="PauseBeforeUpdateInSeconds" class="text-danger" style="float-left"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="IsolationLevel" class="control-label"></label>
+            </td>
+            <td>
+                <select asp-for="IsolationLevel" asp-items="Html.GetEnumSelectList<StockUpdateParameters.ValidIsolationLevels>()"></select>
+                <span asp-validation-for="IsolationLevel" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" >
+                <input type="submit" value="Submit order" class="btn btn-lg btn-primary" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr />
+                    <div class="wrapper text-center" style="width:600px;margin-top:50px;">
+                    <div class="btn-group mr-2 pull-left" role="group" aria-label="First group">
+                        <a href="/home/ChangeStock?changeInStock=-1" class="btn btn-outline-dark btn-lg">-1</a>
+                        <a href="/home/ChangeStock?changeInStock=-5" class="btn btn-outline-dark btn-lg">-5</a>
+                    </div>
+                        <span class="pull-left" style="margin:5px;margin-top:20px;font-size:x-large;font-weight:bold;">@ViewData["currentStock"] in stock</span>
+                        <div class="btn-group mr-2 pull-left" role="group" aria-label="Second group">
+                        <a href="/home/ChangeStock?changeInStock=5" class="btn btn-outline-dark btn-lg">+5</a>
+                        <a href="/home/ChangeStock?changeInStock=1" class="btn btn-outline-dark btn-lg">+1</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
 </form>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

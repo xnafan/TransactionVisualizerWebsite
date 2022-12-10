@@ -25,11 +25,12 @@ namespace TransactionVisualizerWebsite.Models
 
         [Required]
         [Display(Name = "Quantity to order")]
-        [Range(1, int.MaxValue, ErrorMessage = "Must be larger than zero")]
+        [Range(1, int.MaxValue, ErrorMessage = "Must be greater than zero")]
         public int Quantity { get; set; } = 5;
 
         [Required]
-        [Display(Name = "Pause between read and update (in seconds)")]
+        [Display(Name = "Pause before update (sec.)")]
+        [Range(0, int.MaxValue, ErrorMessage = "May not be negative")]
         public int PauseBeforeUpdateInSeconds { get; set; } = 5;
 
         [Required]
