@@ -1,12 +1,33 @@
 ﻿@model dynamic
-
+@{StockUpdateParameters stockUpdateParameters = ((StockUpdateParameters)@Model.stockUpdateParameters);}
 <div class="center-rounded-corners">
     <h3 style="color:@(Model.updated?"green":"red")">@(Model.updated ? "Stock updated" : "Stock not updated")</h3>
     <div style="font-size:15pt;">
         <br />Stock before order: @Model.stockBefore
-        <br />Desired quantity in order: @Model.desiredQuantityInOrder
+        <br />Desired quantity in order: @Model.stockUpdateParameters.Quantity
         <br />Stock after order: @Model.stockAfter
-        <br />Attempts: @Model.attempts
+        <br />Attempts: @Model.attempts (of maximum @stockUpdateParameters.MaxAttempts )
+        @if (@Model.exceptions.Count > 0)
+        {
+            <hr />
+            <h4>@Model.exceptions.Count exceptions:</h4>
+            <ol>
+            @foreach (Exception ex in @Model.exceptions)
+            {
+                    <li>Exception was : @ex.Message;
+                        @if(ex.InnerException != null)
+                        {<ul>
+                            <li>Inner exception was: '@ex.InnerException.Message'.</li>
+                        </ul>}
+                    </li>
+            }
+            </ol>
+        }
+        <hr />
+        <h4>Settings</h4>
+        IsolationLevel: @stockUpdateParameters.IsolationLevel
+        <br />Pause between stock check and order: @stockUpdateParameters.PauseBeforeUpdateInSeconds
+        <br />Maximum attempts: @stockUpdateParameters.MaxAttempts
     </div>
 </div>
 <div style="width:300px;margin:0px auto;text-align:center;margin-top:10px;">

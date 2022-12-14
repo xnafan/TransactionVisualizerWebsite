@@ -24,7 +24,7 @@ public class DatabaseAccess
         catch (Exception ex)
         {
             Debug.WriteLine($"Thread: {Thread.CurrentThread.ManagedThreadId} got an exception: {ex.Message}");
-            return false;
+            throw new Exception($"Error sending order for {parameters.Quantity} products. The error was: '{ex.Message}'", ex);
         }
     }
 
@@ -33,6 +33,7 @@ public class DatabaseAccess
         //if we didn't receive a connection create a new one
         var connection = transaction?.Connection ?? CreateConnection();
         //create a command
+        //create a commandw
         SqlCommand command = connection.CreateCommand();
         command.CommandText = "SELECT stock FROM Product WHERE Id=@productId";
         //set the transaction (won't give any problems if null)
@@ -67,7 +68,6 @@ public class DatabaseAccess
             command.Parameters.AddWithValue("@change", change);
             command.Parameters.AddWithValue("@productId", productId);
 
-
             //store whether we're working on an open or closed connection
             var initialConnectionState = connection.State;
             //open the connection if it was closed initially
@@ -78,9 +78,11 @@ public class DatabaseAccess
             if (initialConnectionState == ConnectionState.Closed) { connection.Close(); }
             return rowsAffected > 0;
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Debug.WriteLine($"Thread: {Thread.CurrentThread.ManagedThreadId} got an exception: {ex.Message}");
-            return false; }
+            throw new Exception($"Error making a change of {change} to stock of product {productId}. Error was: '{ex.Message}'", ex);
+        }
     }
 
     public bool SetStock(int productId, int newStockAmount)

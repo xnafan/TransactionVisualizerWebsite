@@ -17,24 +17,37 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult UpdateStock(StockUpdateParameters parameters)
+    public IActionResult UpdateStock(StockUpdateParameters parameters) => TryUpdate(parameters);
+
+    public IActionResult Settings()
     {
-        return TryUpdate(parameters);
+        return View(new StockUpdateParameters());
     }
+
+    [HttpPost]
+    public IActionResult Settings(StockUpdateParameters parameters) => RedirectToAction("Index");
 
     private IActionResult TryUpdate(StockUpdateParameters parameters)
     {
         var stockBefore = databaseAccess.GetProductStock(parameters.ProductId);
-        var desiredQuantityInOrder = parameters.Quantity;
         bool updatedSuccessfully = false;
-        int attempt = 1;
-        while (attempt <= parameters.MaxAttempts && !updatedSuccessfully)
+        int attempt = 0;
+        var exceptions = new List<Exception>();
+        while (attempt < parameters.MaxAttempts && !updatedSuccessfully)
         {
-            updatedSuccessfully = databaseAccess.RemoveProductIfEnoughInStock(parameters);
+            try
+            {
+                updatedSuccessfully = databaseAccess.RemoveProductIfEnoughInStock(parameters);
+            }
+            catch (Exception ex)
+            {
+                exceptions.Add(ex);
+            }
             attempt++;
         }
+
         var stockAfter = databaseAccess.GetProductStock(parameters.ProductId);
-        return View(new { updated = updatedSuccessfully, stockBefore = stockBefore, stockAfter = stockAfter, desiredQuantityInOrder = desiredQuantityInOrder, attempts = attempt });
+            return View(new { updated = updatedSuccessfully, stockBefore = stockBefore, stockAfter = stockAfter, attempts = attempt, stockUpdateParameters = parameters, exceptions = exceptions });
     }
 
 

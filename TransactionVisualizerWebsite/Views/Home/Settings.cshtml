@@ -1,0 +1,51 @@
+﻿@model TransactionVisualizerWebsite.Models.StockUpdateParameters
+@{ViewData["Title"] = "Transaction visualizer settings";}
+<div class="center-rounded-corners">
+    <h1>Transaction settings <img src="/gfx/settings-75.svg" style="width:50px;" /></h1>
+    <hr />
+    <form asp-action="Settings" class="text-center">
+        <table class="mx-auto">
+            <tr>
+                <td colspan="2">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="PauseBeforeUpdateInSeconds" class="control-label"></label>
+                </td>
+                <td>
+                    <input asp-for="PauseBeforeUpdateInSeconds" class="form-control" style="float-left" />
+                    <span asp-validation-for="PauseBeforeUpdateInSeconds" class="text-danger" style="float-left"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="MaxAttempts" class="control-label"></label>
+                </td>
+                <td>
+                    <input asp-for="MaxAttempts" class="form-control" style="float-left" />
+                    <span asp-validation-for="MaxAttempts" class="text-danger" style="float-left"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="IsolationLevel" class="control-label"></label>
+                </td>
+                <td>
+                    <select asp-for="IsolationLevel" asp-items="Html.GetEnumSelectList<StockUpdateParameters.ValidIsolationLevels>()"></select>
+                    <span asp-validation-for="IsolationLevel" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Save settings" class="btn btn-lg btn-success" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div style="width:300px;margin:0px auto;text-align:center;margin-top:10px;">
+    <a href="javascript:window.open(window.location.href, makeId(), '_new');">open new window</a>
+</div>
+@section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}

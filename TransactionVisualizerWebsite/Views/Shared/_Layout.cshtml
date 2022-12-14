@@ -8,28 +8,49 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransactionVisualizerWebsite.styles.css" asp-append-version="true" />
     <style>
-
         * {
-            font-size:large;
+            font-size: large;
             /*border: 1px solid red !important;*/
         }
 
-        hr{width:400px; margin:auto; margin-top:25px; background-color:blue;height:2px !important; opacity:100%;}
-            input[type=number] {
-                margin: auto;
-                width: 75px !important;
-            }
+        hr {
+            width: 400px;
+            margin: auto;
+            margin-top: 25px;
+            background-color: blue;
+            height: 2px !important;
+            opacity: 100%;
+        }
+
+        input[type=number] {
+            margin: auto;
+            width: 75px !important;
+        }
+
         label {
             display: inline-block;
             width: 250px;
         }
+
         .center-rounded-corners {
-            width:60%;max-width:750px;background-color:white;opacity:90%;margin:0px auto; padding:20px;margin-top:40px;border-radius: 25px;border:2px solid cornflowerblue; box-shadow: 5px 10px rgba(0,0,0,0.2);position: relative;z-index: 10;text-align:center;
+            width: 60%;
+            max-width: 750px;
+            background-color: white;
+            opacity: 90%;
+            margin: 0px auto;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 25px;
+            border: 2px solid cornflowerblue;
+            box-shadow: 5px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 10;
+            text-align: center;
         }
 
         td {
             /*text-align:center;*/
-            vertical-align:top;
+            vertical-align: top;
             height: 65px;
         }
     </style>
@@ -49,14 +70,19 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Settings">Settings <img src="/gfx/settings-75.svg" style="width:25px;" /></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
-    
-            @RenderBody()
-    
-    
+
+    @RenderBody()
+
+
     <footer class="footer bg-light">
         <div class="container text-center">
             <a href="https://github.com/xnafan/TransactionVisualizerWebsite"> Transaction visualizer website code on GitHub <img src="/gfx/GitHub-Mark-20px.png" /> </a>
@@ -64,15 +90,15 @@
     </footer>
     <script>
         function makeId(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
-        </script>
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+    </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

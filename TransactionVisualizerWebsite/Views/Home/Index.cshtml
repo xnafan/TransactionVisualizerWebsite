@@ -20,33 +20,6 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <label asp-for="PauseBeforeUpdateInSeconds" class="control-label"></label>
-                </td>
-                <td>
-                    <input asp-for="PauseBeforeUpdateInSeconds" class="form-control" style="float-left" />
-                    <span asp-validation-for="PauseBeforeUpdateInSeconds" class="text-danger" style="float-left"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label asp-for="MaxAttempts" class="control-label"></label>
-                </td>
-                <td>
-                    <input asp-for="MaxAttempts" class="form-control" style="float-left" />
-                    <span asp-validation-for="MaxAttempts" class="text-danger" style="float-left"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label asp-for="IsolationLevel" class="control-label"></label>
-                </td>
-                <td>
-                    <select asp-for="IsolationLevel" asp-items="Html.GetEnumSelectList<StockUpdateParameters.ValidIsolationLevels>()"></select>
-                    <span asp-validation-for="IsolationLevel" class="text-danger"></span>
-                </td>
-            </tr>
-            <tr>
                 <td colspan="2">
                     <input type="submit" value="Submit order" class="btn btn-lg btn-primary" />
                 </td>
