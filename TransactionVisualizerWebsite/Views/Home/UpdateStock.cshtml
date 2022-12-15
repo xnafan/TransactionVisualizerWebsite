@@ -3,7 +3,7 @@
 <div class="center-rounded-corners">
     <h3 style="color:@(Model.updated?"green":"red")">@(Model.updated ? "Stock updated" : "Stock not updated")</h3>
     <div style="font-size:15pt;">
-        <br />Stock before order: @Model.stockBefore
+        Stock before order: @Model.stockBefore
         <br />Desired quantity in order: @Model.stockUpdateParameters.Quantity
         <br />Stock after order: @Model.stockAfter
         <br />Attempts: @Model.attempts (of maximum @stockUpdateParameters.MaxAttempts )
@@ -26,7 +26,7 @@
         <hr />
         <h4>Settings</h4>
         IsolationLevel: @stockUpdateParameters.IsolationLevel
-        <br />Pause between stock check and order: @stockUpdateParameters.PauseBeforeUpdateInSeconds
+        <br />Pause between stock check and order: @stockUpdateParameters.PauseBeforeUpdateInSeconds seconds
         <br />Maximum attempts: @stockUpdateParameters.MaxAttempts
     </div>
 </div>

@@ -46,6 +46,6 @@
     </form>
 </div>
 <div style="width:300px;margin:0px auto;text-align:center;margin-top:10px;">
-    <a href="javascript:window.open(window.location.href, makeId(), '_new');">open new window</a>
+    @Html.ActionLink("Back", "Index")
 </div>
 @section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}
